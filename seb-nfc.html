@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SEB · Pan de Banano Artesanal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --obsidian:#1A1A18;
+    --masa:#F0EFE8;
+    --panela:#C4A882;
+    --corteza:#7A7060;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{
+    background:var(--obsidian);
+    color:var(--masa);
+    font-family:'Montserrat',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  body{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:0 0 48px 0;
+  }
+
+  /* ---- Hero ---- */
+  .hero{
+    width:100%;
+    max-width:480px;
+    padding:64px 32px 40px;
+    text-align:center;
+    position:relative;
+  }
+  .wordmark{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:15vw;
+    max-font-size:64px;
+    letter-spacing:0.14em;
+    color:var(--masa);
+    line-height:1;
+  }
+  @media(min-width:420px){ .wordmark{ font-size:64px; } }
+
+  .cut-line{
+    width:0;
+    height:1px;
+    background:var(--panela);
+    margin:22px auto;
+    animation:cut 1.4s ease-out 0.3s forwards;
+  }
+  @keyframes cut{
+    to{ width:120px; }
+  }
+
+  .tagline{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:19px;
+    color:var(--panela);
+    line-height:1.5;
+    max-width:340px;
+    margin:0 auto;
+    opacity:0;
+    animation:rise 0.9s ease-out 0.9s forwards;
+  }
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(8px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .place{
+    margin-top:18px;
+    font-size:11px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--corteza);
+    opacity:0;
+    animation:rise 0.9s ease-out 1.1s forwards;
+  }
+
+  /* ---- CTA block ---- */
+  .actions{
+    width:100%;
+    max-width:400px;
+    padding:8px 28px 0;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    text-decoration:none;
+    padding:17px 24px;
+    font-family:'Montserrat',sans-serif;
+    font-size:13px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    border-radius:2px;
+    transition:transform 0.15s ease, opacity 0.15s ease;
+  }
+  .btn:active{ transform:scale(0.98); }
+  .btn-primary{
+    background:var(--panela);
+    color:var(--obsidian);
+    font-weight:500;
+  }
+  .btn-secondary{
+    background:transparent;
+    color:var(--masa);
+    border:1px solid rgba(240,239,232,0.28);
+    font-weight:400;
+  }
+  .btn svg{ width:16px; height:16px; flex-shrink:0; }
+
+  /* ---- Divider ---- */
+  .divider{
+    width:100%;
+    max-width:400px;
+    padding:0 28px;
+    margin:44px 0 8px;
+  }
+  .divider .label{
+    font-size:10px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--corteza);
+    text-align:center;
+    position:relative;
+  }
+  .divider .label::before,
+  .divider .label::after{
+    content:'';
+    position:absolute;
+    top:50%;
+    width:34px;
+    height:1px;
+    background:rgba(122,112,96,0.4);
+  }
+  .divider .label::before{ left:-46px; }
+  .divider .label::after{ right:-46px; }
+
+  /* ---- Products ---- */
+  .products{
+    width:100%;
+    max-width:400px;
+    padding:24px 28px 0;
+    display:flex;
+    flex-direction:column;
+  }
+  .product{
+    border-bottom:1px solid rgba(122,112,96,0.25);
+  }
+  .product:first-child .product-head{ padding-top:0; }
+  .product-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:16px;
+    padding:18px 0;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+  }
+  .product-left{
+    display:flex;
+    align-items:baseline;
+    gap:9px;
+  }
+  .chevron{
+    width:9px;
+    height:9px;
+    flex-shrink:0;
+    border-right:1px solid var(--panela);
+    border-bottom:1px solid var(--panela);
+    transform:translateY(-3px) rotate(-45deg);
+    transition:transform 0.3s ease;
+  }
+  .product.open .chevron{
+    transform:translateY(0) rotate(45deg);
+  }
+  .product-name{
+    font-family:'Playfair Display',serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--masa);
+  }
+  .product-note{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--corteza);
+    display:block;
+    margin-top:3px;
+  }
+  .product-price{
+    font-size:12px;
+    color:var(--panela);
+    white-space:nowrap;
+    letter-spacing:0.02em;
+  }
+  .product-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.4s ease, opacity 0.3s ease;
+    opacity:0;
+  }
+  .product.open .product-body{
+    opacity:1;
+  }
+  .product-desc{
+    font-family:'Cormorant Garamond',serif;
+    font-size:15px;
+    line-height:1.6;
+    color:var(--masa);
+    opacity:0.82;
+    padding:0 0 20px;
+    max-width:320px;
+  }
+
+  /* ---- Footer ---- */
+  .footer{
+    width:100%;
+    max-width:400px;
+    padding:40px 28px 0;
+    text-align:center;
+  }
+  .footer .essence{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--corteza);
+    line-height:1.6;
+    max-width:280px;
+    margin:0 auto 22px;
+  }
+  .ig-link{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    color:var(--masa);
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:0.08em;
+  }
+  .ig-link svg{ width:15px; height:15px; opacity:0.85; }
+</style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="wordmark">SEB</div>
+    <div class="cut-line"></div>
+    <div class="tagline">No es una torta,<br>es un bloque de intención.</div>
+    <div class="place">Medellín · Horneado lento</div>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-primary" href="https://wa.me/573001655496?text=Hola%2C%20quiero%20hacer%20un%20pedido%20de%20SEB" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A7.85 7.85 0 0 0 12.05 4a7.94 7.94 0 0 0-6.9 11.9L4 20l4.2-1.1a7.9 7.9 0 0 0 3.85 1h.01a7.94 7.94 0 0 0 5.54-13.58zM12.06 18.4h-.01a6.6 6.6 0 0 1-3.36-.92l-.24-.14-2.5.65.67-2.43-.16-.25a6.6 6.6 0 0 1 5.6-10.16 6.56 6.56 0 0 1 6.58 6.6 6.6 6.6 0 0 1-6.58 6.65zm3.6-4.94c-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.45.1-.13.2-.5.64-.62.77-.11.13-.23.15-.42.05-.2-.1-.83-.3-1.58-.97-.58-.52-.98-1.16-1.09-1.36-.11-.2-.01-.3.09-.4.09-.1.2-.24.3-.36.1-.12.13-.2.2-.34.06-.13.03-.25-.02-.35-.05-.1-.45-1.07-.61-1.47-.16-.38-.33-.33-.45-.34h-.38c-.13 0-.35.05-.53.25-.18.2-.7.68-.7 1.66 0 .97.72 1.92.82 2.05.1.13 1.4 2.15 3.4 3.01.48.2.85.33 1.14.42.48.15.91.13 1.26.08.38-.06 1.17-.48 1.34-.94.16-.46.16-.86.11-.94-.05-.09-.18-.14-.38-.24z"/></svg>
+      Pedir por WhatsApp
+    </a>
+    <a class="btn btn-secondary" href="seb-contacto.vcf" download="SEB.vcf">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M4 9h16M9 4v5"/></svg>
+      Guardar contacto
+    </a>
+  </div>
+
+  <div class="divider"><div class="label">Productos</div></div>
+
+  <div class="products">
+    <div class="product">
+      <div class="product-head" onclick="toggleProduct(this)">
+        <div class="product-left">
+          <span class="chevron"></span>
+          <div>
+            <div class="product-name">Pan Grande</div>
+            <span class="product-note">el ritual, entero</span>
+          </div>
+        </div>
+        <div class="product-price">$40.000</div>
+      </div>
+      <div class="product-body">
+        <p class="product-desc">Banano bien maduro, canela y mantequilla, horneado despacio hasta que la corteza se oscurece. El tamaño para compartir en casa, o para que dure toda la semana.</p>
+      </div>
+    </div>
+    <div class="product">
+      <div class="product-head" onclick="toggleProduct(this)">
+        <div class="product-left">
+          <span class="chevron"></span>
+          <div>
+            <div class="product-name">Pan Pequeño</div>
+            <span class="product-note">para uno, o para probar</span>
+          </div>
+        </div>
+        <div class="product-price">$20.000</div>
+      </div>
+      <div class="product-body">
+        <p class="product-desc">La misma receta del Pan Grande, en una porción para una persona. El punto de entrada para conocer SEB, sin comprometerse a todo el bloque.</p>
+      </div>
+    </div>
+    <div class="product">
+      <div class="product-head" onclick="toggleProduct(this)">
+        <div class="product-left">
+          <span class="chevron"></span>
+          <div>
+            <div class="product-name">Galleta Anzac · Panela</div>
+            <span class="product-note">Australia y Medellín, en una galleta</span>
+          </div>
+        </div>
+        <div class="product-price">$15.000</div>
+      </div>
+      <div class="product-body">
+        <p class="product-desc">Avena, coco y panela derretida, siguiendo la receta australiana de la familia de Jane, horneada en Medellín. Paquete de nueve galletas.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleProduct(head){
+      const product = head.parentElement;
+      const body = product.querySelector('.product-body');
+      const isOpen = product.classList.contains('open');
+
+      document.querySelectorAll('.product.open').forEach(p => {
+        if(p !== product){
+          p.classList.remove('open');
+          p.querySelector('.product-body').style.maxHeight = null;
+        }
+      });
+
+      if(isOpen){
+        product.classList.remove('open');
+        body.style.maxHeight = null;
+      } else {
+        product.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    }
+  </script>
+
+  <div class="footer">
+    <div class="essence">Cada bloque se hornea despacio, con intención. No es un producto rápido, y no pretende serlo.</div>
+    <a class="ig-link" href="https://instagram.com/sebbananabread" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+      @sebbananabread
+    </a>
+  </div>
+
+</body>
+</html>
